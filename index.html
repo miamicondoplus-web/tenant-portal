@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<!-- saved from url=(0059)file:///C:/Users/Fernando/Downloads/tenant-portal-v2_1.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenant Portal</title>
+<link href="./index_files/css2" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: #f5f0e8; color: #1c2b2b; min-height: 100vh; }
+
+/* ── LOGIN ── */
+.login-bg {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a6b6b 0%, #0d4040 60%, #082828 100%);
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+.login-box { width: 100%; max-width: 420px; }
+.login-logo { text-align: center; margin-bottom: 32px; }
+.login-logo .t1 { font-family: 'DM Serif Display', serif; font-size: 44px; color: #fff; }
+.login-logo .t2 { font-family: 'DM Serif Display', serif; font-size: 44px; color: #a8d8d8; font-style: italic; margin-top: -10px; }
+.login-logo .sub { color: rgba(255,255,255,0.45); font-size: 13px; margin-top: 6px; }
+.login-card { background: #fff; border-radius: 20px; padding: 32px 28px; box-shadow: 0 24px 60px rgba(0,0,0,0.3); }
+.tab-row { display: flex; background: #f5f0e8; border-radius: 10px; padding: 4px; margin-bottom: 24px; }
+.tab-btn { flex: 1; padding: 9px 0; border-radius: 8px; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 13px; transition: all .2s; }
+.tab-btn.active { background: #1a6b6b; color: #fff; }
+.tab-btn:not(.active) { background: transparent; color: #6b8080; }
+.demo-hint { margin-top: 16px; padding: 11px 14px; background: #f5f0e8; border-radius: 8px; font-size: 12px; color: #6b8080; }
+
+/* ── HEADER ── */
+.app-header {
+  background: #1a6b6b; color: #fff; padding: 14px 24px;
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.app-header .logo { font-family: 'DM Serif Display', serif; font-size: 20px; }
+.app-header .logo em { color: #a8d8d8; }
+.app-header .who { font-size: 12px; color: #a8d8d8; margin-top: 2px; }
+.nav-btns { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.nav-btn { padding: 7px 16px; border-radius: 20px; border: 2px solid rgba(255,255,255,.35); background: transparent; color: #fff; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 12px; cursor: pointer; transition: all .2s; display: inline-flex; align-items: center; gap: 4px; }
+.nav-btn.active { background: #fff; color: #1a6b6b; border-color: #fff; }
+.notif-dot { width: 7px; height: 7px; background: #e74c3c; border-radius: 50%; display: inline-block; }
+
+/* ── MAIN ── */
+.main { max-width: 860px; margin: 0 auto; padding: 28px 16px 70px; }
+
+/* ── CARDS ── */
+.card { background: #fff; border-radius: 14px; padding: 22px 24px; box-shadow: 0 4px 20px rgba(26,107,107,.08); border: 1px solid #d4cfc4; margin-bottom: 16px; }
+.card-title { font-family: 'DM Serif Display', serif; font-size: 17px; color: #1a6b6b; margin-bottom: 14px; }
+.page-title { font-family: 'DM Serif Display', serif; font-size: 28px; color: #1a6b6b; margin-bottom: 4px; }
+.page-sub { font-size: 13px; color: #6b8080; margin-bottom: 22px; }
+
+/* ── FORM ── */
+.form-group { margin-bottom: 14px; }
+label.lbl { display: block; font-size: 11px; font-weight: 700; color: #6b8080; text-transform: uppercase; letter-spacing: .8px; margin-bottom: 5px; }
+input[type=text], input[type=email], input[type=password], select, textarea {
+  width: 100%; padding: 10px 13px; border: 1.5px solid #d4cfc4; border-radius: 8px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; color: #1c2b2b;
+  background: #f5f0e8; outline: none; transition: border .2s, box-shadow .2s;
+}
+input:focus, select:focus, textarea:focus { border-color: #1a6b6b; box-shadow: 0 0 0 3px rgba(26,107,107,.1); background: #fff; }
+textarea { resize: vertical; min-height: 90px; }
+.form-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+/* ── BUTTONS ── */
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; border-radius: 8px; border: none; font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; transition: all .2s; }
+.btn-primary { background: #1a6b6b; color: #fff; }
+.btn-primary:hover { background: #2a8a8a; transform: translateY(-1px); }
+.btn-ghost { background: #e8dfc8; color: #1c2b2b; }
+.btn-danger-outline { background: transparent; border: 1.5px solid #e74c3c; color: #e74c3c; padding: 7px 14px; font-size: 12px; }
+.btn-sm { padding: 8px 16px; font-size: 13px; }
+.btn-full { width: 100%; justify-content: center; font-size: 15px; padding: 13px; }
+
+/* ── STATUS BADGES ── */
+.badge { display: inline-block; padding: 3px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; letter-spacing: .4px; white-space: nowrap; }
+.badge-open { background: #fef3cd; color: #856404; }
+.badge-in-progress { background: #d1ecf1; color: #0c5460; }
+.badge-resolved { background: #d4edda; color: #155724; }
+.badge-closed { background: #e2e3e5; color: #383d41; }
+
+/* ── PRIORITY DOT ── */
+.pdot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 4px; flex-shrink: 0; }
+.p-low { background: #27ae60; }
+.p-medium { background: #f39c12; }
+.p-high { background: #e74c3c; }
+.p-emergency { background: #8e44ad; }
+
+/* ── REQUEST LIST ITEM ── */
+.req-item { background: #fff; border-radius: 12px; padding: 16px 18px; margin-bottom: 10px; cursor: pointer; display: flex; gap: 14px; align-items: flex-start; border: 1px solid #d4cfc4; transition: all .18s; }
+.req-item:hover { border-color: #1a6b6b; box-shadow: 0 4px 18px rgba(26,107,107,.1); transform: translateY(-1px); }
+.req-item.unread { border-left: 4px solid #1a6b6b; }
+.req-icon { font-size: 26px; margin-top: 3px; flex-shrink: 0; }
+.req-meta { flex: 1; min-width: 0; }
+.req-title { font-weight: 600; font-size: 15px; margin-bottom: 3px; display: flex; align-items: center; gap: 6px; }
+.req-desc { font-size: 13px; color: #6b8080; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.req-footer { font-size: 12px; color: #6b8080; margin-top: 5px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+.req-right { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
+
+/* ── THREAD ── */
+.thread { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+.msg { max-width: 82%; padding: 13px 16px; border-radius: 14px; font-size: 14px; line-height: 1.55; }
+.msg-tenant { background: #e8f4f4; border: 1px solid #b2d8d8; align-self: flex-start; border-bottom-left-radius: 4px; color: #1c2b2b; }
+.msg-manager { background: #1a6b6b; color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+.msg-meta { font-size: 11px; margin-top: 5px; opacity: .6; }
+.msg-manager .msg-meta { text-align: right; }
+.msg-attachments { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.msg-thumb { width: 60px; height: 60px; border-radius: 6px; object-fit: cover; border: 1px solid rgba(0,0,0,.1); cursor: pointer; }
+.msg-file { display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,.2); padding: 4px 10px; border-radius: 6px; font-size: 12px; }
+
+/* ── FILE DROP ── */
+.file-drop { border: 2px dashed #d4cfc4; border-radius: 10px; padding: 14px 16px; text-align: center; cursor: pointer; background: #f5f0e8; transition: all .2s; position: relative; }
+.file-drop.drag, .file-drop:hover { border-color: #1a6b6b; background: #e8f4f4; }
+.file-drop input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.file-drop p { font-size: 13px; color: #6b8080; pointer-events: none; }
+.file-previews { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.fp { width: 72px; height: 72px; border-radius: 8px; overflow: hidden; position: relative; border: 1px solid #d4cfc4; background: #f5f0e8; display: flex; align-items: center; justify-content: center; flex-direction: column; flex-shrink: 0; }
+.fp img { width: 100%; height: 100%; object-fit: cover; }
+.fp .fp-name { font-size: 9px; color: #6b8080; padding: 0 3px; word-break: break-all; text-align: center; }
+.fp .fp-rm { position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,.55); color: #fff; border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+
+/* ── STATS ── */
+.stats-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 22px; }
+.stat-card { background: #fff; border-radius: 10px; padding: 14px 16px; border: 1px solid #d4cfc4; text-align: center; }
+.stat-num { font-family: 'DM Serif Display', serif; font-size: 32px; }
+.stat-lbl { font-size: 12px; color: #6b8080; margin-top: 2px; }
+
+/* ── FILTERS ── */
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+.filter-btn { padding: 6px 16px; border-radius: 20px; border: 1.5px solid #d4cfc4; background: #fff; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 12px; cursor: pointer; transition: all .15s; color: #1c2b2b; }
+.filter-btn.active { background: #1a6b6b; color: #fff; border-color: #1a6b6b; }
+
+/* ── REPLY BOX ── */
+.reply-box { background: #f5f0e8; border-radius: 10px; padding: 16px; margin-top: 18px; border: 1px solid #d4cfc4; }
+.reply-box-title { font-size: 11px; font-weight: 700; color: #6b8080; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+
+/* ── STATUS BTNS ── */
+.status-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.status-btn { padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 13px; background: #e8dfc8; color: #1c2b2b; transition: all .15s; }
+.status-btn.active { background: #1a6b6b; color: #fff; }
+
+/* ── EMAIL HINT ── */
+.email-hint { background: #e8f4f4; border: 1px solid #b2d8d8; border-radius: 10px; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+.email-hint span { font-size: 13px; color: #1a6b6b; }
+
+/* ── MISC ── */
+.back-btn { background: none; border: none; font-family: 'DM Sans', sans-serif; font-size: 13px; color: #1a6b6b; cursor: pointer; display: flex; align-items: center; gap: 4px; margin-bottom: 16px; font-weight: 700; padding: 0; }
+.empty-state { text-align: center; padding: 48px 0; color: #6b8080; }
+.empty-state .ei { font-size: 40px; margin-bottom: 10px; }
+.error-box { background: #fde8e8; color: #c0392b; padding: 10px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 14px; }
+.success-box { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 13px 18px; border-radius: 10px; font-size: 14px; margin-bottom: 16px; }
+
+/* ── MODAL ── */
+.modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.8); z-index: 9000; align-items: center; justify-content: center; }
+.modal-overlay.open { display: flex; }
+.modal-img { max-width: 90vw; max-height: 88vh; border-radius: 10px; }
+.modal-close { position: absolute; top: 18px; right: 24px; background: none; border: none; color: #fff; font-size: 32px; cursor: pointer; }
+
+/* ── TOAST ── */
+.toast { position: fixed; bottom: 24px; right: 24px; background: #1a6b6b; color: #fff; padding: 13px 22px; border-radius: 10px; font-size: 14px; font-weight: 500; box-shadow: 0 6px 24px rgba(0,0,0,.18); z-index: 9999; transform: translateY(80px); opacity: 0; transition: all .3s; pointer-events: none; }
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.err { background: #c0392b; }
+
+@media (max-width: 600px) {
+  .form-2col { grid-template-columns: 1fr; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .msg { max-width: 95%; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LOGIN ══════════════════════════════════════════════════════════════════ -->
+<div id="page-login" class="login-bg">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="t1">Tenant</div>
+      <div class="t2">Portal</div>
+      <div class="sub">Repair Request Management</div>
+    </div>
+    <div class="login-card">
+      <div class="tab-row">
+        <button class="tab-btn" id="tab-tenant" onclick="setLoginTab(&#39;tenant&#39;)">🏠 Tenant</button>
+        <button class="tab-btn active" id="tab-manager" onclick="setLoginTab(&#39;manager&#39;)">🔑 Manager</button>
+      </div>
+      <div class="form-group">
+        <label class="lbl">Username</label>
+        <input type="text" id="login-user" placeholder="Your username" onkeydown="if(event.key===&#39;Enter&#39;)doLogin()">
+      </div>
+      <div class="form-group">
+        <label class="lbl">Password</label>
+        <input type="password" id="login-pass" placeholder="••••••" onkeydown="if(event.key===&#39;Enter&#39;)doLogin()">
+      </div>
+      <div id="login-error" class="error-box" style="display:none"></div>
+      <button class="btn btn-primary btn-full" onclick="doLogin()">Sign In →</button>
+      <div class="demo-hint" id="demo-hint-tenant" style="display: none;">
+        <strong>Demo accounts:</strong> maria / 1234 &nbsp;·&nbsp; carlos / 1234
+      </div>
+      <div class="demo-hint" id="demo-hint-manager" style="">
+        <strong>Demo:</strong> manager / admin123
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ APP ════════════════════════════════════════════════════════════════════ -->
+<div id="page-app" style="display:none">
+  <!-- Header -->
+  <div class="app-header">
+    <div>
+      <div class="logo">Tenant <em>Portal</em></div>
+      <div class="who" id="header-who"></div>
+    </div>
+    <div class="nav-btns" id="nav-btns"></div>
+  </div>
+
+  <!-- Tenant Views -->
+  <div id="tenant-views" style="display:none">
+    <div class="main">
+      <!-- New Request -->
+      <div id="v-new-request">
+        <div class="page-title">Submit a Repair Request</div>
+        <div class="page-sub">Describe the issue and we'll get back to you as soon as possible.</div>
+        <div id="submit-success" class="success-box" style="display:none">✅ <strong>Request submitted!</strong> We'll get back to you soon.</div>
+        <div class="card">
+          <div class="card-title">Issue Details</div>
+          <div class="form-2col">
+            <div class="form-group">
+              <label class="lbl">Category</label>
+              <select id="f-cat">
+                <option value="">Select...</option>
+                <option>🔧 Plumbing</option><option>⚡ Electrical</option>
+                <option>❄️ A/C &amp; Heating</option><option>🚪 Doors &amp; Windows</option>
+                <option>🏠 Roof &amp; Ceiling</option><option>🪟 Appliances</option>
+                <option>🐛 Pest Control</option><option>🔒 Locks &amp; Security</option>
+                <option>🌿 Landscaping</option><option>📦 Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="lbl">Priority</label>
+              <select id="f-priority">
+                <option value="low">🟢 Low – Not urgent</option>
+                <option value="medium" selected="">🟡 Medium – Needs attention</option>
+                <option value="high">🔴 High – Urgent</option>
+                <option value="emergency">🟣 Emergency</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="lbl">Issue Title</label>
+            <input type="text" id="f-title" placeholder="Brief description of the problem">
+          </div>
+          <div class="form-group">
+            <label class="lbl">Description</label>
+            <textarea id="f-desc" placeholder="Describe the issue in detail. When did it start?"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="lbl">Photos / Videos</label>
+            <div class="file-drop" ondragover="event.preventDefault();this.classList.add(&#39;drag&#39;)" ondragleave="this.classList.remove(&#39;drag&#39;)" ondrop="handleDrop(event,&#39;new-req-files&#39;)">
+              <input type="file" multiple="" accept="image/*,video/*" onchange="addFiles(event,&#39;new-req-files&#39;)">
+              <p>📎 <strong>Click to upload</strong> or drag &amp; drop — Photos &amp; videos</p>
+            </div>
+            <div class="file-previews" id="new-req-files-preview"></div>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:flex-end">
+          <button class="btn btn-primary" onclick="submitRequest()">📤 Submit Request</button>
+        </div>
+      </div>
+
+      <!-- My Requests -->
+      <div id="v-my-requests" style="display:none">
+        <div class="page-title">My Requests</div>
+        <div class="page-sub">Track the status of your repair requests.</div>
+        <div id="tenant-list"></div>
+      </div>
+
+      <!-- Tenant Detail -->
+      <div id="v-tenant-detail" style="display:none"></div>
+    </div>
+  </div>
+
+  <!-- Manager Views -->
+  <div id="manager-views" style="display:none">
+    <div class="main">
+      <!-- All Requests -->
+      <div id="v-mgr-requests">
+        <div class="page-title">Repair Requests</div>
+        <div class="page-sub">All maintenance requests from your tenants.</div>
+        <div class="stats-grid" id="mgr-stats"></div>
+        <div class="filter-row" id="mgr-filters">
+          <button class="filter-btn active" onclick="setFilter(&#39;all&#39;,this)">All</button>
+          <button class="filter-btn" onclick="setFilter(&#39;open&#39;,this)">Open</button>
+          <button class="filter-btn" onclick="setFilter(&#39;in-progress&#39;,this)">In Progress</button>
+          <button class="filter-btn" onclick="setFilter(&#39;resolved&#39;,this)">Resolved</button>
+          <button class="filter-btn" onclick="setFilter(&#39;closed&#39;,this)">Closed</button>
+        </div>
+        <div id="mgr-list"></div>
+      </div>
+      <!-- Manager Detail -->
+      <div id="v-mgr-detail" style="display:none"></div>
+      <!-- Tenants -->
+      <div id="v-tenants" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:20px">
+          <div><div class="page-title">Tenants</div><div class="page-sub">Manage tenant login accounts.</div></div>
+          <button class="btn btn-primary btn-sm" onclick="toggleAddTenant()">+ Add Tenant</button>
+        </div>
+        <div id="add-tenant-form" class="card" style="display:none;border-color:#1a6b6b">
+          <div class="card-title">New Tenant Account</div>
+          <div class="form-2col">
+            <div class="form-group"><label class="lbl">Full Name</label><input type="text" id="nt-name" placeholder="Maria Costa"></div>
+            <div class="form-group"><label class="lbl">Unit</label><input type="text" id="nt-unit" placeholder="Unit 3A"></div>
+            <div class="form-group"><label class="lbl">Email</label><input type="email" id="nt-email" placeholder="maria@email.com"></div>
+            <div class="form-group"><label class="lbl">Username</label><input type="text" id="nt-user" placeholder="maria"></div>
+            <div class="form-group"><label class="lbl">Password</label><input type="password" id="nt-pass" placeholder="choose a password"></div>
+          </div>
+          <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
+            <button class="btn btn-ghost btn-sm" onclick="toggleAddTenant()">Cancel</button>
+            <button class="btn btn-primary btn-sm" onclick="saveTenant()">Save Tenant</button>
+          </div>
+        </div>
+        <div id="tenants-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Image Modal -->
+<div class="modal-overlay" id="img-modal">
+  <button class="modal-close" onclick="closeModal()">✕</button>
+  <img class="modal-img" id="modal-img" src="file:///C:/Users/Fernando/Downloads/tenant-portal-v2_1.html" alt="">
+</div>
+<div class="modal-overlay" id="img-modal" onclick="if(event.target===this)closeModal()"></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// CONFIG — Change these two lines to your own credentials
+// ════════════════════════════════════════════════════════════════
+const MANAGER_CREDS = { username: "manager", password: "admin123" };
+const MANAGER_EMAIL = "manager@yourproperty.com";
+
+// ════════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════════
+let currentUser = null;
+let loginTab = 'tenant';
+let mgrFilter = 'all';
+let newReqFiles = [];
+let replyFilesMap = {};
+
+// Load DB from localStorage
+let DB = { requests: [], tenants: [] };
+function loadDB() {
+  try { const s = localStorage.getItem('tenantPortalDB2'); if (s) DB = JSON.parse(s); } catch(e){}
+  if (!DB.requests) DB.requests = [];
+  if (!DB.tenants) DB.tenants = [];
+  if (DB.tenants.length === 0) {
+    DB.tenants = [
+      { id:'t1', name:'Maria Costa', unit:'Unit 3A', email:'maria@example.com', username:'maria', password:'1234' },
+      { id:'t2', name:'Carlos Mendes', unit:'Unit 1B', email:'carlos@example.com', username:'carlos', password:'1234' },
+    ];
+  }
+  if (DB.requests.length === 0) {
+    DB.requests = [
+      { id:'REQ-001', tenantId:'t1', name:'Maria Costa', unit:'Unit 3A', email:'maria@example.com',
+        category:'🔧 Plumbing', title:'Leaking faucet in kitchen', priority:'medium', status:'open',
+        description:'The kitchen faucet has been dripping constantly for 3 days.',
+        date: new Date(Date.now()-2*864e5).toISOString(),
+        thread:[{from:'tenant',text:'The kitchen faucet has been dripping constantly for 3 days.',date:new Date(Date.now()-2*864e5).toISOString(),files:[]}],
+        unreadByManager:true, unreadByTenant:false },
+      { id:'REQ-002', tenantId:'t2', name:'Carlos Mendes', unit:'Unit 1B', email:'carlos@example.com',
+        category:'❄️ A/C & Heating', title:'A/C not cooling properly', priority:'high', status:'in-progress',
+        description:'The A/C unit in the living room stopped working effectively.',
+        date: new Date(Date.now()-5*864e5).toISOString(),
+        thread:[
+          {from:'tenant',text:'The A/C unit in the living room stopped working effectively.',date:new Date(Date.now()-5*864e5).toISOString(),files:[]},
+          {from:'manager',text:'Hi Carlos! I have scheduled a technician for Thursday between 9am–12pm. Please make sure someone is home. 😊',date:new Date(Date.now()-4*864e5).toISOString(),files:[]}
+        ],
+        unreadByManager:false, unreadByTenant:true },
+    ];
+  }
+}
+function saveDB() { try { localStorage.setItem('tenantPortalDB2', JSON.stringify(DB)); } catch(e){} }
+loadDB();
+
+// ════════════════════════════════════════════════════════════════
+// HELPERS
+// ════════════════════════════════════════════════════════════════
+function fmtDate(iso, full=false) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  return full
+    ? d.toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'})
+    : d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+function newId() { return 'REQ-' + String(DB.requests.length+1).padStart(3,'0'); }
+function catIcon(cat) {
+  if (!cat) return '📦';
+  const icons = {'Plumbing':'🔧','Electrical':'⚡','A/C':'❄️','Doors':'🚪','Roof':'🏠','Appliances':'🪟','Pest':'🐛','Locks':'🔒','Landscaping':'🌿'};
+  for (let k in icons) if (cat.includes(k)) return icons[k];
+  return '📦';
+}
+function badgeHtml(status) {
+  const map = {'open':'Open','in-progress':'In Progress','resolved':'Resolved','closed':'Closed'};
+  return `<span class="badge badge-${status}">${map[status]||status}</span>`;
+}
+function pdotHtml(p) { return `<span class="pdot p-${p}"></span>`; }
+function showToast(msg, err=false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = 'toast' + (err?' err':'');
+  t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ════════════════════════════════════════════════════════════════
+// LOGIN
+// ════════════════════════════════════════════════════════════════
+function setLoginTab(tab) {
+  loginTab = tab;
+  document.getElementById('tab-tenant').classList.toggle('active', tab==='tenant');
+  document.getElementById('tab-manager').classList.toggle('active', tab==='manager');
+  document.getElementById('demo-hint-tenant').style.display = tab==='tenant'?'':'none';
+  document.getElementById('demo-hint-manager').style.display = tab==='manager'?'':'none';
+  document.getElementById('login-error').style.display = 'none';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+}
+
+function doLogin() {
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const err = document.getElementById('login-error');
+  err.style.display = 'none';
+
+  if (loginTab === 'manager') {
+    if (user === MANAGER_CREDS.username && pass === MANAGER_CREDS.password) {
+      currentUser = { role:'manager', name:'Property Manager' };
+      startApp();
+    } else { err.textContent = '⚠️ Invalid manager credentials.'; err.style.display = 'block'; }
+  } else {
+    const t = DB.tenants.find(t => t.username===user && t.password===pass);
+    if (t) { currentUser = { role:'tenant', ...t }; startApp(); }
+    else { err.textContent = '⚠️ Username or password incorrect.'; err.style.display = 'block'; }
+  }
+}
+
+function startApp() {
+  document.getElementById('page-login').style.display = 'none';
+  document.getElementById('page-app').style.display = 'block';
+  document.getElementById('header-who').textContent = currentUser.role==='manager' ? '🔑 Manager Dashboard' : `🏠 ${currentUser.name} · ${currentUser.unit}`;
+  if (currentUser.role === 'tenant') {
+    document.getElementById('tenant-views').style.display = 'block';
+    document.getElementById('manager-views').style.display = 'none';
+    renderTenantNav();
+    showView('v-new-request');
+  } else {
+    document.getElementById('tenant-views').style.display = 'none';
+    document.getElementById('manager-views').style.display = 'block';
+    renderManagerNav();
+    showMgrView('v-mgr-requests');
+    renderMgrRequests();
+  }
+}
+
+function logout() {
+  currentUser = null;
+  document.getElementById('page-app').style.display = 'none';
+  document.getElementById('page-login').style.display = 'flex';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  document.getElementById('login-error').style.display = 'none';
+}
+
+// ════════════════════════════════════════════════════════════════
+// NAV
+// ════════════════════════════════════════════════════════════════
+function renderTenantNav() {
+  const unread = DB.requests.filter(r=>r.tenantId===currentUser.id && r.unreadByTenant).length;
+  document.getElementById('nav-btns').innerHTML = `
+    <button class="nav-btn active" id="nb-new" onclick="tenantNav('new')">New Request</button>
+    <button class="nav-btn" id="nb-list" onclick="tenantNav('list')">My Requests ${unread?'<span class="notif-dot"></span>':''}</button>
+    <button class="nav-btn" onclick="logout()" style="opacity:.6">Sign Out</button>`;
+}
+function tenantNav(tab) {
+  document.getElementById('nb-new').classList.toggle('active', tab==='new');
+  document.getElementById('nb-list').classList.toggle('active', tab==='list');
+  if (tab==='new') showView('v-new-request');
+  else { showView('v-my-requests'); renderTenantList(); }
+}
+function renderManagerNav() {
+  const unread = DB.requests.filter(r=>r.unreadByManager).length;
+  document.getElementById('nav-btns').innerHTML = `
+    <button class="nav-btn active" id="nb-reqs" onclick="mgrNav('requests')">Requests ${unread?'<span class="notif-dot"></span>':''}</button>
+    <button class="nav-btn" id="nb-tens" onclick="mgrNav('tenants')">Tenants</button>
+    <button class="nav-btn" onclick="logout()" style="opacity:.6">Sign Out</button>`;
+}
+function mgrNav(tab) {
+  document.getElementById('nb-reqs').classList.toggle('active', tab==='requests');
+  document.getElementById('nb-tens').classList.toggle('active', tab==='tenants');
+  if (tab==='requests') { showMgrView('v-mgr-requests'); renderMgrRequests(); }
+  else { showMgrView('v-tenants'); renderTenantsMgr(); }
+}
+
+// ════════════════════════════════════════════════════════════════
+// VIEW HELPERS
+// ════════════════════════════════════════════════════════════════
+const tenantViews = ['v-new-request','v-my-requests','v-tenant-detail'];
+const mgrViews = ['v-mgr-requests','v-mgr-detail','v-tenants'];
+function showView(id) { tenantViews.forEach(v=>document.getElementById(v).style.display = v===id?'':'none'); }
+function showMgrView(id) { mgrViews.forEach(v=>document.getElementById(v).style.display = v===id?'':'none'); }
+
+// ════════════════════════════════════════════════════════════════
+// FILES
+// ════════════════════════════════════════════════════════════════
+function fileToB64(file) {
+  return new Promise((res,rej)=>{
+    const r = new FileReader();
+    r.onload = e => res({name:file.name,type:file.type,data:e.target.result});
+    r.onerror = rej; r.readAsDataURL(file);
+  });
+}
+async function addFiles(event, key) {
+  const files = Array.from(event.target.files);
+  const arr = await Promise.all(files.map(fileToB64));
+  if (key==='new-req-files') { newReqFiles.push(...arr); renderFilePreviews('new-req-files-preview', newReqFiles, key); }
+  else { if (!replyFilesMap[key]) replyFilesMap[key]=[]; replyFilesMap[key].push(...arr); renderFilePreviews('rp-'+key+'-preview', replyFilesMap[key], key); }
+}
+async function handleDrop(e, key) {
+  e.preventDefault(); e.currentTarget.classList.remove('drag');
+  const files = Array.from(e.dataTransfer.files);
+  const arr = await Promise.all(files.map(fileToB64));
+  if (key==='new-req-files') { newReqFiles.push(...arr); renderFilePreviews('new-req-files-preview', newReqFiles, key); }
+  else { if (!replyFilesMap[key]) replyFilesMap[key]=[]; replyFilesMap[key].push(...arr); renderFilePreviews('rp-'+key+'-preview', replyFilesMap[key], key); }
+}
+function removeFile(i, key) {
+  if (key==='new-req-files') { newReqFiles.splice(i,1); renderFilePreviews('new-req-files-preview', newReqFiles, key); }
+  else { replyFilesMap[key].splice(i,1); renderFilePreviews('rp-'+key+'-preview', replyFilesMap[key], key); }
+}
+function renderFilePreviews(containerId, arr, key) {
+  const c = document.getElementById(containerId); if (!c) return;
+  c.innerHTML = arr.map((f,i)=>`
+    <div class="fp">
+      ${f.type.startsWith('image/') ? `<img src="${f.data}" alt="${f.name}">` : `<span style="font-size:22px">${f.type.startsWith('video/')?'🎥':'📄'}</span><span class="fp-name">${f.name.slice(0,12)}</span>`}
+      <button class="fp-rm" onclick="removeFile(${i},'${key}')">✕</button>
+    </div>`).join('');
+}
+
+// ════════════════════════════════════════════════════════════════
+// TENANT: SUBMIT
+// ════════════════════════════════════════════════════════════════
+function submitRequest() {
+  const cat = document.getElementById('f-cat').value;
+  const title = document.getElementById('f-title').value.trim();
+  const priority = document.getElementById('f-priority').value;
+  const desc = document.getElementById('f-desc').value.trim();
+  if (!cat||!title||!desc) { showToast('⚠️ Please fill in all fields.', true); return; }
+
+  const req = {
+    id: newId(),
+    tenantId: currentUser.id, name: currentUser.name, unit: currentUser.unit, email: currentUser.email||'',
+    category: cat, title, priority, status:'open', description: desc,
+    date: new Date().toISOString(),
+    thread:[{from:'tenant',text:desc,date:new Date().toISOString(),files:[...newReqFiles]}],
+    unreadByManager:true, unreadByTenant:false
+  };
+  DB.requests.unshift(req); saveDB();
+
+  // Reset
+  ['f-cat','f-title','f-desc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-priority').value='medium';
+  newReqFiles=[]; renderFilePreviews('new-req-files-preview',[]);
+
+  const sb = document.getElementById('submit-success');
+  sb.style.display='block'; setTimeout(()=>sb.style.display='none',5000);
+  showToast('✅ Request submitted!');
+  renderTenantNav();
+}
+
+// ════════════════════════════════════════════════════════════════
+// TENANT: LIST + DETAIL
+// ════════════════════════════════════════════════════════════════
+function renderTenantList() {
+  const mine = DB.requests.filter(r=>r.tenantId===currentUser.id).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const c = document.getElementById('tenant-list');
+  if (!mine.length) { c.innerHTML='<div class="empty-state"><div class="ei">📋</div><p>No requests yet.</p></div>'; return; }
+  c.innerHTML = mine.map(r=>`
+    <div class="req-item ${r.unreadByTenant?'unread':''}" onclick="openTenantDetail('${r.id}')">
+      <div class="req-icon">${catIcon(r.category)}</div>
+      <div class="req-meta">
+        <div class="req-title">${r.title} ${r.unreadByTenant?'<span class="notif-dot"></span>':''}</div>
+        <div class="req-desc">${r.description}</div>
+        <div class="req-footer">
+          <span>${pdotHtml(r.priority)}${r.priority}</span>
+          <span>${fmtDate(r.date)}</span>
+          <span>💬 ${r.thread.length}</span>
+        </div>
+      </div>
+      <div class="req-right">${badgeHtml(r.status)}</div>
+    </div>`).join('');
+}
+
+function openTenantDetail(id) {
+  const req = DB.requests.find(r=>r.id===id); if(!req) return;
+  req.unreadByTenant=false; saveDB();
+  replyFilesMap['td-'+id]=[];
+  const c = document.getElementById('v-tenant-detail');
+  c.innerHTML=`
+    <button class="back-btn" onclick="tenantNav('list')">← My Requests</button>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:18px">
+      <div>
+        <div style="font-family:'DM Serif Display',serif;font-size:26px;color:#1a6b6b">${req.title}</div>
+        <div style="font-size:13px;color:#6b8080;margin-top:3px">${req.id} · ${req.unit} · ${fmtDate(req.date)}</div>
+      </div>
+      ${badgeHtml(req.status)}
+    </div>
+    <div class="card">
+      <div class="card-title">Conversation</div>
+      <div class="thread" id="thread-${id}">${renderThread(req.thread,'tenant')}</div>
+      <div class="reply-box">
+        <div class="reply-box-title">Add a Comment</div>
+        <textarea id="trep-${id}" placeholder="Add more details or updates..."></textarea>
+        <div class="file-drop" style="margin-top:8px" ondragover="event.preventDefault()" ondrop="handleDrop(event,'td-${id}')">
+          <input type="file" multiple accept="image/*,video/*" onchange="addFiles(event,'td-${id}')">
+          <p>📎 Attach files</p>
+        </div>
+        <div class="file-previews" id="rp-td-${id}-preview"></div>
+        <div style="display:flex;justify-content:flex-end;margin-top:10px">
+          <button class="btn btn-primary btn-sm" onclick="tenantReply('${id}')">Send</button>
+        </div>
+      </div>
+    </div>`;
+  showView('v-tenant-detail');
+  renderTenantNav();
+}
+
+function tenantReply(id) {
+  const text = document.getElementById('trep-'+id).value.trim();
+  const files = replyFilesMap['td-'+id]||[];
+  if (!text&&!files.length) { showToast('⚠️ Write a message or attach a file.', true); return; }
+  const req = DB.requests.find(r=>r.id===id);
+  req.thread.push({from:'tenant',text,date:new Date().toISOString(),files:[...files]});
+  req.unreadByManager=true; saveDB();
+  document.getElementById('trep-'+id).value='';
+  replyFilesMap['td-'+id]=[];
+  document.getElementById('thread-'+id).innerHTML=renderThread(req.thread,'tenant');
+  document.getElementById('rp-td-'+id+'-preview').innerHTML='';
+  showToast('💬 Comment added!');
+  renderTenantNav();
+}
+
+// ════════════════════════════════════════════════════════════════
+// MANAGER: REQUESTS
+// ════════════════════════════════════════════════════════════════
+function setFilter(f, btn) {
+  mgrFilter=f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMgrRequests();
+}
+
+function renderMgrRequests() {
+  // Stats
+  const total=DB.requests.length, open=DB.requests.filter(r=>r.status==='open').length,
+    prog=DB.requests.filter(r=>r.status==='in-progress').length,
+    unread=DB.requests.filter(r=>r.unreadByManager).length;
+  document.getElementById('mgr-stats').innerHTML=`
+    <div class="stat-card"><div class="stat-num" style="color:#1a6b6b">${total}</div><div class="stat-lbl">Total</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:#856404">${open}</div><div class="stat-lbl">Open</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:#0c5460">${prog}</div><div class="stat-lbl">In Progress</div></div>
+    <div class="stat-card"><div class="stat-num" style="color:#c0392b">${unread}</div><div class="stat-lbl">Unread</div></div>`;
+
+  let list = DB.requests.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if (mgrFilter!=='all') list=list.filter(r=>r.status===mgrFilter);
+  const c = document.getElementById('mgr-list');
+  if (!list.length) { c.innerHTML='<div class="empty-state"><div class="ei">🎉</div><p>No requests here.</p></div>'; return; }
+  c.innerHTML=list.map(r=>`
+    <div class="req-item ${r.unreadByManager?'unread':''}" onclick="openMgrDetail('${r.id}')">
+      <div class="req-icon">${catIcon(r.category)}</div>
+      <div class="req-meta">
+        <div class="req-title">${r.title} ${r.unreadByManager?'<span class="notif-dot"></span>':''}</div>
+        <div class="req-desc">${r.description}</div>
+        <div class="req-footer">
+          <span>👤 ${r.name}</span><span>🏠 ${r.unit}</span>
+          <span>${pdotHtml(r.priority)}${r.priority}</span>
+          <span>${fmtDate(r.date)}</span><span>💬 ${r.thread.length}</span>
+        </div>
+      </div>
+      <div class="req-right">${badgeHtml(r.status)}<span style="font-size:11px;color:#6b8080">${r.id}</span></div>
+    </div>`).join('');
+}
+
+function openMgrDetail(id) {
+  const req = DB.requests.find(r=>r.id===id); if(!req) return;
+  req.unreadByManager=false; saveDB();
+  replyFilesMap['md-'+id]=[];
+  const mailto = buildMailto(req);
+  const c = document.getElementById('v-mgr-detail');
+  c.innerHTML=`
+    <button class="back-btn" onclick="mgrNav('requests')">← All Requests</button>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:18px">
+      <div>
+        <div style="font-family:'DM Serif Display',serif;font-size:26px;color:#1a6b6b">${req.title}</div>
+        <div style="font-size:13px;color:#6b8080;margin-top:3px">${req.id} · 👤 ${req.name} · 🏠 ${req.unit} · ${fmtDate(req.date)}</div>
+      </div>
+      ${badgeHtml(req.status)}
+    </div>
+    <div class="card">
+      <div class="card-title">Update Status</div>
+      <div class="status-btns">
+        ${['open','in-progress','resolved','closed'].map(s=>`
+          <button class="status-btn ${req.status===s?'active':''}" onclick="updateStatus('${id}','${s}',this)">${s==='in-progress'?'In Progress':s.charAt(0).toUpperCase()+s.slice(1)}</button>
+        `).join('')}
+      </div>
+    </div>
+    <div class="email-hint">
+      <span>📧 Notify tenant by email: <strong>${req.email||'no email on file'}</strong></span>
+      ${req.email?`<a href="${mailto}" class="btn btn-primary btn-sm" style="text-decoration:none">Open Mail App</a>`:''}
+    </div>
+    <div class="card">
+      <div class="card-title">Conversation Thread</div>
+      <div class="thread" id="thread-${id}">${renderThread(req.thread,'manager')}</div>
+      <div class="reply-box">
+        <div class="reply-box-title">Reply to Tenant</div>
+        <textarea id="mrep-${id}" placeholder="Write your response to the tenant..."></textarea>
+        <div class="file-drop" style="margin-top:8px" ondragover="event.preventDefault()" ondrop="handleDrop(event,'md-${id}')">
+          <input type="file" multiple accept="image/*,video/*,.pdf,.doc,.docx" onchange="addFiles(event,'md-${id}')">
+          <p>📎 Attach files</p>
+        </div>
+        <div class="file-previews" id="rp-md-${id}-preview"></div>
+        <div style="display:flex;justify-content:flex-end;margin-top:10px">
+          <button class="btn btn-primary btn-sm" onclick="mgrReply('${id}')">Send Reply</button>
+        </div>
+      </div>
+    </div>`;
+  showMgrView('v-mgr-detail');
+  renderManagerNav();
+}
+
+function updateStatus(id, status, btn) {
+  const req = DB.requests.find(r=>r.id===id); req.status=status; saveDB();
+  btn.closest('.status-btns').querySelectorAll('.status-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  showToast(`✅ Status updated to "${btn.textContent}"`);
+}
+
+function mgrReply(id) {
+  const text = document.getElementById('mrep-'+id).value.trim();
+  const files = replyFilesMap['md-'+id]||[];
+  if (!text&&!files.length) { showToast('⚠️ Write a reply or attach a file.', true); return; }
+  const req = DB.requests.find(r=>r.id===id);
+  req.thread.push({from:'manager',text,date:new Date().toISOString(),files:[...files]});
+  req.unreadByTenant=true; saveDB();
+  document.getElementById('mrep-'+id).value='';
+  replyFilesMap['md-'+id]=[];
+  document.getElementById('thread-'+id).innerHTML=renderThread(req.thread,'manager');
+  document.getElementById('rp-md-'+id+'-preview').innerHTML='';
+  showToast('📩 Reply sent to tenant!');
+  renderManagerNav();
+}
+
+function buildMailto(req) {
+  const sub = encodeURIComponent(`[Repair Request] ${req.id} – ${req.title}`);
+  const body = encodeURIComponent(`New repair request submitted!\n\nID: ${req.id}\nTenant: ${req.name}\nUnit: ${req.unit}\nCategory: ${req.category}\nPriority: ${req.priority}\n\nDescription:\n${req.description}\n\nPlease log in to the portal to respond.`);
+  return `mailto:${req.email}?subject=${sub}&body=${body}`;
+}
+
+// ════════════════════════════════════════════════════════════════
+// THREAD RENDER
+// ════════════════════════════════════════════════════════════════
+function renderThread(thread, viewer) {
+  return thread.map(msg=>{
+    const isMgr = msg.from==='manager';
+    const cls = isMgr ? 'msg-manager' : 'msg-tenant';
+    const align = isMgr ? 'flex-end' : 'flex-start';
+    const who = isMgr ? '🔑 Manager' : '🏠 Tenant';
+    const files = (msg.files||[]).map(f=>
+      f.type&&f.type.startsWith('image/') ? `<img class="msg-thumb" src="${f.data}" onclick="openModal('${f.data}')" alt="${f.name}">` :
+      `<div class="msg-file">${f.type&&f.type.startsWith('video/')?'🎥':'📄'} ${f.name}</div>`
+    ).join('');
+    return `<div style="align-self:${align};max-width:82%">
+      <div class="msg ${cls}">
+        ${msg.text?`<div>${msg.text}</div>`:''}
+        ${files?`<div class="msg-attachments">${files}</div>`:''}
+        <div class="msg-meta">${who} · ${fmtDate(msg.date,true)}</div>
+      </div></div>`;
+  }).join('');
+}
+
+// ════════════════════════════════════════════════════════════════
+// TENANTS MANAGER
+// ════════════════════════════════════════════════════════════════
+function toggleAddTenant() {
+  const f = document.getElementById('add-tenant-form');
+  f.style.display = f.style.display==='none' ? 'block' : 'none';
+}
+function saveTenant() {
+  const name=document.getElementById('nt-name').value.trim(),
+    unit=document.getElementById('nt-unit').value.trim(),
+    email=document.getElementById('nt-email').value.trim(),
+    username=document.getElementById('nt-user').value.trim(),
+    password=document.getElementById('nt-pass').value;
+  if(!name||!unit||!username||!password){showToast('⚠️ Fill in all tenant fields.',true);return;}
+  DB.tenants.push({id:'t'+Date.now(),name,unit,email,username,password});
+  saveDB(); toggleAddTenant();
+  ['nt-name','nt-unit','nt-email','nt-user','nt-pass'].forEach(id=>document.getElementById(id).value='');
+  renderTenantsMgr(); showToast('✅ Tenant added!');
+}
+function removeTenant(id) {
+  if(!confirm('Remove this tenant account?')) return;
+  DB.tenants=DB.tenants.filter(t=>t.id!==id); saveDB(); renderTenantsMgr(); showToast('Tenant removed.');
+}
+function renderTenantsMgr() {
+  document.getElementById('tenants-list').innerHTML = DB.tenants.map(t=>`
+    <div class="card" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:16px 20px">
+      <div>
+        <div style="font-weight:600;font-size:15px">👤 ${t.name}</div>
+        <div style="font-size:13px;color:#6b8080;margin-top:3px">🏠 ${t.unit} · 📧 ${t.email||'no email'} · 🔑 @${t.username}</div>
+        <div style="font-size:12px;color:#6b8080;margin-top:3px">${DB.requests.filter(r=>r.tenantId===t.id).length} request(s)</div>
+      </div>
+      <button class="btn btn-danger-outline" onclick="removeTenant('${t.id}')">Remove</button>
+    </div>`).join('');
+}
+
+// ════════════════════════════════════════════════════════════════
+// IMAGE MODAL
+// ════════════════════════════════════════════════════════════════
+function openModal(src) {
+  document.getElementById('modal-img').src=src;
+  document.getElementById('img-modal').classList.add('open');
+}
+function closeModal() { document.getElementById('img-modal').classList.remove('open'); }
+document.getElementById('img-modal').addEventListener('click',function(e){if(e.target===this)closeModal();});
+</script>
+
+
+</body></html>
